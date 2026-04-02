@@ -9,6 +9,22 @@
  */
 {
   "sections": {
+    "collection_list_MWXmfD": {
+      "type": "collection-list",
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -36,52 +52,11 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "collection_list_MWXmfD": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_GFDzMC": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "supplies"
-          }
-        },
-        "featured_collection_LXcFWF": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "vodka"
-          }
-        },
-        "featured_collection_RFk6P6": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "wine"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_GFDzMC",
-        "featured_collection_LXcFWF",
-        "featured_collection_RFk6P6"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Collections",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
-    "collection_list_MWXmfD",
     "banner",
-    "product-grid"
+    "product-grid",
+    "collection_list_MWXmfD"
   ]
 }
