@@ -39,6 +39,7 @@
     },
     "collection_list_MWXmfD": {
       "type": "collection-list",
+      "disabled": true,
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Collections",
