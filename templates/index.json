@@ -9,47 +9,6 @@
  */
 {
   "sections": {
-    "collection_list_bwkCPq": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_DjaUBR": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "beer"
-          }
-        },
-        "featured_collection_J8iMy6": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "wine"
-          }
-        },
-        "featured_collection_TGWmwJ": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "coffee"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_DjaUBR",
-        "featured_collection_J8iMy6",
-        "featured_collection_TGWmwJ"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Collections",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -271,7 +230,6 @@
     }
   },
   "order": [
-    "collection_list_bwkCPq",
     "image_banner",
     "rich_text",
     "featured_collection",
