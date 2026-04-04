@@ -33,8 +33,8 @@
         "footer-2": {
           "type": "text",
           "settings": {
-            "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+            "heading": "",
+            "subtext": "<p><a href=\"https://www.bing.com/ck/a?!&&p=aed78383a9b41b7e477ddb815612ed6d03b6949e797ed7ce514980dce01d40beJmltdHM9MTc3NTE3NDQwMA&ptn=3&ver=2&hsh=4&fclid=269b27e9-b4bd-6a6b-08a9-3279b5e36b17&u=a1L21hcHM_Jm1lcGk9NTZ-fkVtYmVkZGVkfkFkZHJlc3NfTGluayZ0eT0xOCZxPU1pa2UlMjdzJTIwTGlxdW9ycyZzcz15cGlkLllORDM1Rjc1OTRFNUZFQTQwJnBwb2lzPTM3LjcxNzE1OTI3MTI0MDIzNF8tMTIyLjQ0MDgxODc4NjYyMTFfTWlrZSUyN3MlMjBMaXF1b3JzX1lORDM1Rjc1OTRFNUZFQTQwfiZjcD0zNy43MTcxNTl-LTEyMi40NDA4MTkmdj0yJnNWPTEmRk9STT1NUFNSUEw&ntb=1\" target=\"_blank\">5084 Mission St, San Francisco, CA 94112</a></p>"
           }
         }
       },
