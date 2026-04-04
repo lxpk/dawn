@@ -18,9 +18,65 @@
         "columns_desktop": 6,
         "columns_mobile": "2"
       }
+    },
+    "collection_list_raJCCL": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_whXmga": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "beer"
+          }
+        },
+        "featured_collection_z7FY44": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "wine"
+          }
+        },
+        "featured_collection_AYBKyf": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "coffee"
+          }
+        },
+        "featured_collection_8Jd8T7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "non-alcoholic-drinks-and-soda"
+          }
+        },
+        "featured_collection_Qb8kYa": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "liqueur-mixers"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_whXmga",
+        "featured_collection_z7FY44",
+        "featured_collection_AYBKyf",
+        "featured_collection_8Jd8T7",
+        "featured_collection_Qb8kYa"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Product Categories",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
+    "collection_list_raJCCL",
     "main"
   ]
 }
