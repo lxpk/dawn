@@ -3,7 +3,7 @@
     Create a custom catering request form block. IMPORTANT: The form must use Shopify's contact form type exactly like this: {% form 'contact' %} ... {% endform %}. The form should include these fields: Name (input text), Email (input email), Phone Number (input text), Company Name (input text), Company Address (input text), Event Date (input date), Event Type (input text), Number of Guests (input number), and Message/Additional Details (textarea). Include a submit button labeled "Submit Catering Request". Style it professionally to match the store theme.
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
-
+ 
 {% style %}
   .ai-catering-form-{{ ai_gen_id }} {
     display: block;
