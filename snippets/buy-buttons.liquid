@@ -72,7 +72,8 @@
           -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
-            type="submit"
+            type="{% if template contains 'keg-template' %}button{% else %}submit{% endif %}"
+            {% if template contains 'keg-template' %}onclick="return add_accessories();"{% endif %}
             name="add"
             class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
