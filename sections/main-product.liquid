@@ -737,6 +737,192 @@
     </script>
   </div>
 </product-info>
+
+
+
+
+
+
+{% if template contains 'keg-template' %}
+<style>
+  .keg-accessories-wrapper { margin: 20px 0; font-family: Arial, sans-serif; font-size: 14px; }
+  .keg-top-row { display: flex; gap: 16px; margin-bottom: 16px; }
+  .keg-box { border: 1px solid #ccc; padding: 12px 16px; flex: 1; }
+  .keg-box label { display: block; margin-bottom: 6px; cursor: pointer; }
+  .keg-deposit-note { color: #cc0000; font-weight: bold; margin-top: 8px; }
+  .keg-pane { border: 1px solid #ccc; border-radius: 4px; padding: 16px; margin-top: 8px; }
+  .keg-pane h3 { text-align: center; margin: 0 0 12px; font-size: 15px; }
+  .keg-pane table { width: 100%; }
+  .keg-pane td { padding: 6px 4px; vertical-align: top; }
+  .keg-image-box { border: 1px solid #ccc; padding: 8px; text-align: center; flex: 2; display: none; }
+  .keg-image-box img { max-width: 100%; max-height: 160px; object-fit: contain; }
+  .keg-deposit-box { background: #fffbe6; border: 1px solid #ccc; padding: 8px 12px; font-size: 13px; }
+  .keg-coupler-img { float: right; text-align: center; font-size: 12px; }
+  .keg-coupler-img img { width: 80px; display: block; margin-bottom: 4px; }
+  #none_pane, #kegerator_pane, #jockeybox_pane { display: none; }
+</style>
+
+<div class="keg-accessories-wrapper">
+
+  <!-- TOP ROW -->
+  <div class="keg-top-row">
+
+    <!-- Accessory selector -->
+    <div class="keg-box" style="flex:1;">
+      <label><input type="radio" name="accessories" value="none" checked onchange="showAccessPane('none')"> I do not need any accessories</label>
+      <label><input type="radio" name="accessories" value="kegerator" onchange="showAccessPane('kegerator')"> Kegerator</label>
+      <label><input type="radio" name="accessories" value="jockeybox" onchange="showAccessPane('jockeybox')"> Jockey Box</label>
+    </div>
+
+    <!-- Image box (shown when kegerator or jockeybox selected) -->
+    <div class="keg-image-box" id="keg_supp_accessories_image_cell">
+      <div id="keg_accessories_image_div" style="width:200px;height:160px;background-size:contain;background-repeat:no-repeat;background-position:center;display:inline-block;"></div>
+    </div>
+
+    <!-- None pane: exchange + cups shown inline -->
+    <div id="keg_supp_accessories_exchange_cell" class="keg-box" style="flex:1;">
+      Empty keg exchange:<br>
+      I have <input type="number" id="exch_qty" value="0" min="0" style="width:50px;"> kegs to exchange
+      <div class="keg-deposit-note">There is a <strong>$50.00 per keg</strong> deposit added to your order for every un-exchanged keg.</div>
+    </div>
+
+    <div id="keg_supp_accessories_cups_cell" class="keg-box" style="flex:1;">
+      <label>
+        <input type="checkbox" id="add_cups" onchange="flipViz('add_cups','cups_qty_row')">
+        I want to add
+      </label>
+      <div id="cups_qty_row" style="display:none; margin-top:6px;">
+        <select id="cups_qty">
+          <option value="CUPS-50">50 ($8.99)</option>
+          <option value="CUPS-100">100 ($16.99)</option>
+        </select>
+        16oz clear plastic cups.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NONE PANE (hidden, exchange/cups shown inline above) -->
+  <div id="none_pane"></div>
+
+  <!-- KEGERATOR PANE -->
+  <div id="kegerator_pane" class="keg-pane" style="display:none;">
+    <h3>Kegerator Accessories</h3>
+    <p>Mike's does not rent Kegerators. Only select this option if you have your <strong>own</strong> Kegerator.</p>
+    <table>
+      <tr>
+        <td>
+          I have <input type="number" id="kr_exch_qty" value="0" min="0" style="width:50px;"> kegs to exchange
+        </td>
+        <td>
+          <div class="keg-deposit-box">There is a <strong>$50.00 per keg</strong> deposit added to your order for every un-exchanged keg.</div>
+        </td>
+        <td rowspan="5" class="keg-coupler-img">
+          <img src="{{ 'dsystem.jpg' | asset_url }}" alt="D System coupler">
+          D System
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label>
+            <input type="checkbox" id="kr_addl_co2" onchange="flipViz('kr_addl_co2','kr_co2_row')">
+            I need <input type="number" id="kr_addl_co2_qty" value="0" min="0" style="width:50px;"> CO&#8322; cartridges
+          </label>
+          <div id="kr_co2_row" style="display:none; margin-top:6px;">
+            Size:
+            <label><input type="radio" name="kr_addl_co2_size" value="2.5"> 2.5 lb</label>
+            <label><input type="radio" name="kr_addl_co2_size" value="5" checked> 5 lb</label>
+            <label><input type="radio" name="kr_addl_co2_size" value="20"> 20 lb</label>
+            <br>
+            I have <input type="number" id="kr_co2_exch_qty" value="0" min="0" style="width:50px;"> cartridges to exchange
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p>This keg uses a <strong>Type D connector</strong> (image to the right).</p>
+          <label><input type="radio" name="kegerator_coupler" value="own" checked> I have a Type D coupler already</label><br>
+          <label><input type="radio" name="kegerator_coupler" value="rental"> I need to rent a Type D coupler ($25.00)</label><br>
+          <label><input type="radio" name="kegerator_coupler" value="purchase"> I want to buy a Type D coupler ($50.00)</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label>
+            <input type="checkbox" id="kr_add_cups" onchange="flipViz('kr_add_cups','kr_cups_row')">
+            I want to add
+          </label>
+          <span id="kr_cups_row" style="display:none;">
+            <select id="kr_cups_qty">
+              <option value="CUPS-50">50 ($8.99)</option>
+              <option value="CUPS-100">100 ($16.99)</option>
+            </select>
+            16oz clear plastic cups.
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label>
+            <input type="checkbox" id="kr_line_clean" onchange="flipViz('kr_line_clean','kr_line_row')">
+            I need line cleaning service for
+          </label>
+          <span id="kr_line_row" style="display:none;">
+            <input type="number" id="kr_line_qty" value="1" min="1" style="width:50px;"> faucets
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- JOCKEY BOX PANE -->
+  <div id="jockeybox_pane" class="keg-pane" style="display:none;">
+    <h3>Jockey Box Accessories</h3>
+    <table>
+      <tr>
+        <td>
+          <label><input type="radio" name="rent_jb" value="jbr1" checked> Rent a single Jockey Box ($50.00)</label><br>
+          <label><input type="radio" name="rent_jb" value="jbr2"> Rent a double Jockey Box ($50.00)</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <input type="checkbox" id="jb_addl_ice" onchange="flipViz('jb_addl_ice','jb_ice_row')">
+            I need <input type="number" id="jb_addl_ice_qty" value="0" min="0" style="width:50px;"> additional bags of ice ($2.99 each)
+          </label>
+          <div id="jb_ice_row" style="display:none;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <input type="checkbox" id="jb_add_cups" onchange="flipViz('jb_add_cups','jb_cups_row')">
+            I want to add
+          </label>
+          <span id="jb_cups_row" style="display:none;">
+            <select id="jb_cups_qty">
+              <option value="CUPS-50">50 ($8.99)</option>
+              <option value="CUPS-100">100 ($16.99)</option>
+            </select>
+            16oz clear plastic cups.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
 <script>
   function getGrid(funct) {
     document.getElementById('wl_function').value = funct;
