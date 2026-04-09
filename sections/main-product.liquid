@@ -818,7 +818,7 @@
           <div class="keg-deposit-box">There is a <strong>$50.00 per keg</strong> deposit added to your order for every un-exchanged keg.</div>
         </td>
         <td rowspan="5" class="keg-coupler-img">
-          <img src="{{ 'dsystem.jpg' | asset_url }}" alt="D System coupler">
+          <img src="{{ 'dsystem.jpg' | asset_url }}" alt="D System coupler"> 
           D System
         </td>
       </tr>
@@ -952,36 +952,50 @@
   }
 
   function showAccessPane(showID) {
-    var image_cell    = document.getElementById('keg_supp_accessories_image_cell');
-    var exchange_cell = document.getElementById('keg_supp_accessories_exchange_cell');
-    var cups_cell     = document.getElementById('keg_supp_accessories_cups_cell');
-    ['none_pane','kegerator_pane','jockeybox_pane','tub_pane'].forEach(function(id) {
-      document.getElementById(id).style.display = 'none';
-    });
-    var showPane = document.getElementById(showID + '_pane');
-    if (showID === 'none') {
-      image_cell.style.display    = 'none';
-      exchange_cell.style.display = 'block';
-      cups_cell.style.display     = 'block';
-    } else {
-      exchange_cell.style.display = 'none';
-      cups_cell.style.display     = 'none';
-      image_cell.style.display    = 'block';
-    }
-    showPane.style.display = 'block';
-    changeBGimage(showID);
+  // Hide all panes
+  ['none_pane','kegerator_pane','jockeybox_pane'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  // Hide/show the image box and exchange/cups cells
+  var image_cell    = document.getElementById('keg_supp_accessories_image_cell');
+  var exchange_cell = document.getElementById('keg_supp_accessories_exchange_cell');
+  var cups_cell     = document.getElementById('keg_supp_accessories_cups_cell');
+
+  if (showID === 'none') {
+    if (image_cell)    image_cell.style.display    = 'none';
+    if (exchange_cell) exchange_cell.style.display = 'block';
+    if (cups_cell)     cups_cell.style.display     = 'block';
+  } else {
+    if (image_cell)    image_cell.style.display    = 'block';
+    if (exchange_cell) exchange_cell.style.display = 'none';
+    if (cups_cell)     cups_cell.style.display     = 'none';
   }
 
-  function changeBGimage(showID) {
-    var images = {
-      none:      'generic_keg.jpg',
-      kegerator: 'generic_kegerator.jpg',
-      jockeybox: 'generic_jockeybox.jpg',
-      tub:       'generic_kegtub.jpg'
-    };
-    var image_div = document.getElementById('keg_accessories_image_div');
-    image_div.style.backgroundImage = "url('./mikes/images/" + (images[showID] || '') + "')";
+  // Show selected pane
+  var showPane = document.getElementById(showID + '_pane');
+  if (showPane) showPane.style.display = 'block';
+
+  changeBGimage(showID);
+}
+
+function changeBGimage(showID) {
+  var image_div = document.getElementById('keg_accessories_image_div');
+  if (!image_div) return;
+  var images = {
+    kegerator: 'generic_kegerator.jpg',
+    jockeybox: 'generic_jockeybox.jpg'
+  };
+  if (images[showID]) {
+    image_div.style.backgroundImage = "url('{{ 'generic_kegerator.jpg' | asset_url }}')";
+    if (showID === 'jockeybox') {
+      image_div.style.backgroundImage = "url('{{ 'generic_jockeybox.jpg' | asset_url }}')";
+    }
+  } else {
+    image_div.style.backgroundImage = 'none';
   }
+}
 
   function numbersonly(e) {
     var unicode = e.charCode ? e.charCode : e.keyCode;
