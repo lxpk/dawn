@@ -9,6 +9,32 @@
  */
 {
   "sections": {
+    "177579044722391855": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_71c5ca7_cJ4jTP": {
+          "type": "ai_gen_block_71c5ca7",
+          "disabled": true,
+          "settings": {
+            "menu": "main-menu",
+            "menu_alignment": "center",
+            "link_spacing": 30,
+            "vertical_padding": 15,
+            "background_color": "#521e03",
+            "text_color": "#ffffff",
+            "text_hover_color": "#521e03",
+            "border_color": "#e0e0e0",
+            "font_size": 14,
+            "font_weight": "400"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_71c5ca7_cJ4jTP"
+      ],
+      "settings": {}
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -231,6 +257,7 @@
     }
   },
   "order": [
+    "177579044722391855",
     "image_banner",
     "rich_text",
     "featured_collection",
