@@ -1033,6 +1033,8 @@ function changeBGimage(showID) {
     var items = [];
 
     var buy_kegs = parseInt(document.querySelector('input[name="quantity"]').value) || 1;
+    var keg_variant_id = parseInt(document.querySelector('input.product-variant-id').value);
+
 
     var acc_el = document.querySelector('input[name="accessories"]:checked');
     var acc_selected = acc_el ? acc_el.value : 'none';
@@ -1115,6 +1117,8 @@ function changeBGimage(showID) {
         items.push({ id: cup_id, quantity: 1 });
       }
     }
+
+    if (keg_variant_id) { items.unshift({ id: keg_variant_id, quantity: buy_kegs }); }
 
     if (items.length > 0) {
       fetch('/cart/add.js', {
