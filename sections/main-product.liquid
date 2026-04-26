@@ -921,6 +921,389 @@
 
 
 
+{% if template contains 'keg-beer-template' %}
+<style>
+  .keg-accessories-wrapper { margin: 20px 0; font-family: Arial, sans-serif; font-size: 14px; }
+  .keg-top-row { display: flex; gap: 16px; margin-bottom: 16px; }
+  .keg-box { border: 1px solid #ccc; padding: 12px 16px; flex: 1; }
+  .keg-box label { display: block; margin-bottom: 6px; cursor: pointer; }
+  .keg-deposit-note { color: #cc0000; font-weight: bold; margin-top: 8px; }
+  .keg-pane { border: 1px solid #ccc; border-radius: 4px; padding: 16px; margin-top: 8px; }
+  .keg-pane h3 { text-align: center; margin: 0 0 12px; font-size: 15px; }
+  .keg-pane table { width: 100%; }
+  .keg-pane td { padding: 6px 4px; vertical-align: top; }
+  .keg-image-box { border: 1px solid #ccc; padding: 8px; text-align: center; flex: 2; display: none; }
+  .keg-image-box img { max-width: 100%; max-height: 160px; object-fit: contain; }
+  .keg-deposit-box { background: #fffbe6; border: 1px solid #ccc; padding: 8px 12px; font-size: 13px; }
+  .keg-coupler-img { float: right; text-align: center; font-size: 12px; }
+  .keg-coupler-img img { width: 80px; display: block; margin-bottom: 4px; }
+  #bt_none_pane, #bt_kegerator_pane, #bt_jockeybox_pane, #bt_tub_pane { display: none; }
+</style>
+
+<div class="keg-accessories-wrapper">
+  <div class="keg-top-row">
+    <div class="keg-box" style="flex:1;">
+      <label><input type="radio" name="bt_accessories" value="none" checked onchange="btShowAccessPane('none')"> I do not need any accessories</label>
+      <label><input type="radio" name="bt_accessories" value="kegerator" onchange="btShowAccessPane('kegerator')"> Kegerator</label>
+      <label><input type="radio" name="bt_accessories" value="jockeybox" onchange="btShowAccessPane('jockeybox')"> Jockey Box</label>
+      <label><input type="radio" name="bt_accessories" value="tub" onchange="btShowAccessPane('tub')"> Keg Tub</label>
+    </div>
+
+    <div class="keg-image-box" id="bt_keg_supp_accessories_image_cell">
+      <div id="bt_keg_accessories_image_div" style="width:200px;height:160px;background-size:contain;background-repeat:no-repeat;background-position:center;display:inline-block;"></div>
+    </div>
+
+    <div id="bt_keg_supp_accessories_exchange_cell" class="keg-box" style="flex:1;">
+      Empty keg exchange:<br>
+      I have <input type="number" id="bt_exch_qty" value="0" min="0" style="width:50px;"> kegs to exchange
+      <div class="keg-deposit-note">There is a <strong>$50.00 per keg</strong> deposit added to your order for every un-exchanged keg.</div>
+    </div>
+
+    <div id="bt_keg_supp_accessories_cups_cell" class="keg-box" style="flex:1;">
+      <label>
+        <input type="checkbox" id="bt_add_cups" onchange="btFlipViz('bt_add_cups','bt_cups_qty_row')">
+        I want to add
+      </label>
+      <div id="bt_cups_qty_row" style="display:none; margin-top:6px;">
+        <select id="bt_cups_qty">
+          <option value="CUPS-50">50 ($8.99)</option>
+          <option value="CUPS-100">100 ($16.99)</option>
+        </select>
+        16oz clear plastic cups.
+      </div>
+    </div>
+  </div>
+
+  <div id="bt_none_pane"></div>
+
+  <!-- KEGERATOR PANE -->
+  <div id="bt_kegerator_pane" class="keg-pane" style="display:none;">
+    <h3>Kegerator Accessories</h3>
+    <p>Mike's does not rent Kegerators. Only select this option if you have your <strong>own</strong> Kegerator.</p>
+    <table>
+      <tr>
+        <td>I have <input type="number" id="bt_kr_exch_qty" value="0" min="0" style="width:50px;"> kegs to exchange</td>
+        <td><div class="keg-deposit-box">There is a <strong>$50.00 per keg</strong> deposit added to your order for every un-exchanged keg.</div></td>
+        <td rowspan="5" class="keg-coupler-img">
+          <img src="{{ 'dsystem.jpg' | asset_url }}" alt="D System coupler"> D System
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label>
+            <input type="checkbox" id="bt_kr_addl_co2" onchange="btFlipViz('bt_kr_addl_co2','bt_kr_co2_row')">
+            I need <input type="number" id="bt_kr_addl_co2_qty" value="0" min="0" style="width:50px;"> CO&#8322; cartridges
+          </label>
+          <div id="bt_kr_co2_row" style="display:none; margin-top:6px;">
+            Size:
+            <label><input type="radio" name="bt_kr_addl_co2_size" value="2.5"> 2.5 lb</label>
+            <label><input type="radio" name="bt_kr_addl_co2_size" value="5" checked> 5 lb</label>
+            <label><input type="radio" name="bt_kr_addl_co2_size" value="20"> 20 lb</label>
+            <br>
+            I have <input type="number" id="bt_kr_co2_exch_qty" value="0" min="0" style="width:50px;"> cartridges to exchange
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p>This keg uses a <strong>Type D connector</strong> (image to the right).</p>
+          <label><input type="radio" name="bt_kegerator_coupler" value="own" checked> I have a Type D coupler already</label><br>
+          <label><input type="radio" name="bt_kegerator_coupler" value="rental"> I need to rent a Type D coupler ($25.00)</label><br>
+          <label><input type="radio" name="bt_kegerator_coupler" value="purchase"> I want to buy a Type D coupler ($50.00)</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label><input type="checkbox" id="bt_kr_add_cups" onchange="btFlipViz('bt_kr_add_cups','bt_kr_cups_row')"> I want to add</label>
+          <span id="bt_kr_cups_row" style="display:none;">
+            <select id="bt_kr_cups_qty">
+              <option value="CUPS-50">50 ($8.99)</option>
+              <option value="CUPS-100">100 ($16.99)</option>
+            </select>
+            16oz clear plastic cups.
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label><input type="checkbox" id="bt_kr_line_clean" onchange="btFlipViz('bt_kr_line_clean','bt_kr_line_row')"> I need line cleaning service for</label>
+          <span id="bt_kr_line_row" style="display:none;">
+            <input type="number" id="bt_kr_line_qty" value="1" min="1" style="width:50px;"> faucets
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- JOCKEY BOX PANE -->
+  <div id="bt_jockeybox_pane" class="keg-pane" style="display:none;">
+    <h3>Jockey Box Accessories</h3>
+    <table>
+      <tr>
+        <td>
+          <label><input type="radio" name="bt_rent_jb" value="jbr1" checked> Rent a single Jockey Box ($50.00)</label><br>
+          <label><input type="radio" name="bt_rent_jb" value="jbr2"> Rent a double Jockey Box ($50.00)</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <input type="checkbox" id="bt_jb_addl_ice" onchange="btFlipViz('bt_jb_addl_ice','bt_jb_ice_row')">
+            I need <input type="number" id="bt_jb_addl_ice_qty" value="0" min="0" style="width:50px;"> additional bags of ice ($2.99 each)
+          </label>
+          <div id="bt_jb_ice_row" style="display:none;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><input type="checkbox" id="bt_jb_add_cups" onchange="btFlipViz('bt_jb_add_cups','bt_jb_cups_row')"> I want to add</label>
+          <span id="bt_jb_cups_row" style="display:none;">
+            <select id="bt_jb_cups_qty">
+              <option value="CUPS-50">50 ($8.99)</option>
+              <option value="CUPS-100">100 ($16.99)</option>
+            </select>
+            16oz clear plastic cups.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- KEG TUB PANE -->
+  <div id="bt_tub_pane" class="keg-pane" style="display:none;">
+    <h3>Keg Tub Accessories</h3>
+    <table>
+      <tr>
+        <td><label><input type="checkbox" id="bt_rent_kegtub" onchange="btFlipViz('bt_rent_kegtub','bt_tub_rental_note')"> Rent a Keg Tub ($25.00)</label>
+          <div id="bt_tub_rental_note" style="display:none; font-size:12px; color:#666;">A refundable deposit will be added.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><label><input type="checkbox" id="bt_buy_kegtub"> Buy a Keg Tub ($50.00)</label></td>
+      </tr>
+      <tr>
+        <td>
+          <label><input type="radio" name="bt_pump_option" value="own" checked> I have my own party pump</label><br>
+          <label><input type="radio" name="bt_pump_option" value="rental"> Rent a party pump ($25.00 + deposit)</label><br>
+          <label><input type="radio" name="bt_pump_option" value="purchase"> Buy a party pump ($50.00)</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <input type="checkbox" id="bt_tub_ice" onchange="btFlipViz('bt_tub_ice','bt_tub_ice_row')">
+            I need <input type="number" id="bt_tub_addl_ice_qty" value="0" min="0" style="width:50px;"> bags of ice ($2.99 each)
+          </label>
+          <div id="bt_tub_ice_row" style="display:none;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><input type="checkbox" id="bt_kt_add_cups" onchange="btFlipViz('bt_kt_add_cups','bt_kt_cups_row')"> I want to add</label>
+          <span id="bt_kt_cups_row" style="display:none;">
+            <select id="bt_kt_cups_qty">
+              <option value="CUPS-50">50 ($8.99)</option>
+              <option value="CUPS-100">100 ($16.99)</option>
+            </select>
+            16oz clear plastic cups.
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<script>
+  var BT_KEG_VARIANTS = {
+    'KEG-DEP':            48586399482112,
+    'KEG-RET':            48586402496768,
+    'MK02':               48586405937408,
+    'MK03':               48586407313664,
+    'JOCKEY-BOX-DEPOSIT': 48586410361088,
+    'CUPS-50':            48586417209600,
+    'CUPS-100':           48586420846848,
+    'MM7485R':            48586426253568,
+    'MM7485D':            48586428350720,
+    'MM7485E':            48586429595904,
+    'CO013-7LB':          48586432315648,
+    'SERV001':            48222564221184,
+    'MK55':               48648386216192,
+    'MK56':               48648386347264,
+    'MM7509R':            48648386445568,
+    'MM7509D':            48648386707712,
+    'MM7509E':            48648386871552,
+    'TUB-DEPOSIT':        48648387100928
+  };
+
+  function btShowAccessPane(showID) {
+    ['bt_none_pane','bt_kegerator_pane','bt_jockeybox_pane','bt_tub_pane'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    var image_cell    = document.getElementById('bt_keg_supp_accessories_image_cell');
+    var exchange_cell = document.getElementById('bt_keg_supp_accessories_exchange_cell');
+    var cups_cell     = document.getElementById('bt_keg_supp_accessories_cups_cell');
+    if (showID === 'none') {
+      if (image_cell)    image_cell.style.display    = 'none';
+      if (exchange_cell) exchange_cell.style.display = 'block';
+      if (cups_cell)     cups_cell.style.display     = 'block';
+    } else {
+      if (image_cell)    image_cell.style.display    = 'block';
+      if (exchange_cell) exchange_cell.style.display = 'none';
+      if (cups_cell)     cups_cell.style.display     = 'none';
+    }
+    var showPane = document.getElementById('bt_' + showID + '_pane');
+    if (showPane) showPane.style.display = 'block';
+    var map = {
+      kegerator: "url('{{ 'generic_kegerator.jpg' | asset_url }}')",
+      jockeybox: "url('{{ 'generic_jockeybox.jpg' | asset_url }}')",
+      tub:       "url('{{ 'generic_kegtub.jpg' | asset_url }}')"
+    };
+    var image_div = document.getElementById('bt_keg_accessories_image_div');
+    if (image_div) image_div.style.backgroundImage = map[showID] || 'none';
+  }
+
+  function btFlipViz(trigger, target) {
+    var cb = document.getElementById(trigger);
+    var el = document.getElementById(target);
+    if (!cb || !el) return;
+    el.style.display = cb.checked ? 'block' : 'none';
+  }
+
+  function add_accessories() {
+    var items = [];
+    var buy_kegs = parseInt(document.querySelector('input[name="quantity"]').value) || 1;
+    var keg_variant_id = parseInt(document.querySelector('input.product-variant-id').value);
+    if (keg_variant_id) { items.push({ id: keg_variant_id, quantity: buy_kegs }); }
+
+    var acc_el = document.querySelector('input[name="bt_accessories"]:checked');
+    var acc_selected = acc_el ? acc_el.value : 'none';
+
+    if (acc_selected === 'none') {
+      var ex = document.getElementById('bt_exch_qty');
+      var return_kegs = (ex && ex.value > 0) ? parseInt(ex.value) : 0;
+      var deposit_qty = buy_kegs - return_kegs;
+      if (deposit_qty > 0) items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: deposit_qty });
+      if (return_kegs > 0) items.push({ id: BT_KEG_VARIANTS['KEG-RET'], quantity: return_kegs });
+      var cb = document.getElementById('bt_add_cups');
+      if (cb && cb.checked) {
+        var sel = document.getElementById('bt_cups_qty');
+        items.push({ id: BT_KEG_VARIANTS[sel.options[sel.selectedIndex].value], quantity: 1 });
+      }
+    }
+
+    else if (acc_selected === 'kegerator') {
+      var kr_ex = document.getElementById('bt_kr_exch_qty');
+      var return_kegs = (kr_ex && kr_ex.value > 0) ? parseInt(kr_ex.value) : 0;
+      var deposit_qty = buy_kegs - return_kegs;
+      if (deposit_qty > 0) items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: deposit_qty });
+      if (return_kegs > 0) items.push({ id: BT_KEG_VARIANTS['KEG-RET'], quantity: return_kegs });
+      var kr_co2 = document.getElementById('bt_kr_addl_co2');
+      if (kr_co2 && kr_co2.checked) {
+        var addl_co2_qty = parseInt(document.getElementById('bt_kr_addl_co2_qty').value) || 0;
+        if (addl_co2_qty > 0) {
+          var ret_cart = document.getElementById('bt_kr_co2_exch_qty');
+          var ret_qty = ret_cart ? parseInt(ret_cart.value) || 0 : 0;
+          var air_deposit = addl_co2_qty - ret_qty;
+          if (air_deposit > 0) items.push({ id: BT_KEG_VARIANTS['MM7485D'], quantity: air_deposit });
+        }
+      }
+      var coupler_el = document.querySelector('input[name="bt_kegerator_coupler"]:checked');
+      var coupler = coupler_el ? coupler_el.value : 'own';
+      if (coupler === 'rental') {
+        items.push({ id: BT_KEG_VARIANTS['MM7485R'], quantity: 1 });
+        items.push({ id: BT_KEG_VARIANTS['MM7485D'], quantity: 1 });
+      } else if (coupler === 'purchase') {
+        items.push({ id: BT_KEG_VARIANTS['MM7485E'], quantity: 1 });
+      }
+      var line_clean = document.getElementById('bt_kr_line_clean');
+      if (line_clean && line_clean.checked) {
+        var line_qty = parseInt(document.getElementById('bt_kr_line_qty').value) || 1;
+        items.push({ id: BT_KEG_VARIANTS['SERV001'], quantity: line_qty });
+      }
+      var kr_cups = document.getElementById('bt_kr_add_cups');
+      if (kr_cups && kr_cups.checked) {
+        var sel = document.getElementById('bt_kr_cups_qty');
+        items.push({ id: BT_KEG_VARIANTS[sel.options[sel.selectedIndex].value], quantity: 1 });
+      }
+    }
+
+    else if (acc_selected === 'jockeybox') {
+      items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: buy_kegs });
+      var jb_el = document.querySelector('input[name="bt_rent_jb"]:checked');
+      var jb = jb_el ? jb_el.value : 'jbr1';
+      if (jb === 'jbr1') {
+        items.push({ id: BT_KEG_VARIANTS['MK02'], quantity: 1 });
+        items.push({ id: BT_KEG_VARIANTS['JOCKEY-BOX-DEPOSIT'], quantity: 1 });
+      } else if (jb === 'jbr2') {
+        items.push({ id: BT_KEG_VARIANTS['MK03'], quantity: 1 });
+        items.push({ id: BT_KEG_VARIANTS['JOCKEY-BOX-DEPOSIT'], quantity: 1 });
+      }
+      var jb_addl = document.getElementById('bt_jb_addl_ice');
+      if (jb_addl && jb_addl.checked) {
+        var addl_ice = parseInt(document.getElementById('bt_jb_addl_ice_qty').value) || 0;
+        if (addl_ice > 0) items.push({ id: BT_KEG_VARIANTS['CO013-7LB'], quantity: addl_ice });
+      }
+      var jb_cups = document.getElementById('bt_jb_add_cups');
+      if (jb_cups && jb_cups.checked) {
+        var sel = document.getElementById('bt_jb_cups_qty');
+        items.push({ id: BT_KEG_VARIANTS[sel.options[sel.selectedIndex].value], quantity: 1 });
+      }
+    }
+
+    else if (acc_selected === 'tub') {
+      items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: buy_kegs });
+      var rent_tub = document.getElementById('bt_rent_kegtub');
+      if (rent_tub && rent_tub.checked) {
+        items.push({ id: BT_KEG_VARIANTS['MK55'], quantity: 1 });
+        items.push({ id: BT_KEG_VARIANTS['TUB-DEPOSIT'], quantity: 1 });
+      }
+      var buy_tub = document.getElementById('bt_buy_kegtub');
+      if (buy_tub && buy_tub.checked) {
+        items.push({ id: BT_KEG_VARIANTS['MK56'], quantity: 1 });
+      }
+      var pump_el = document.querySelector('input[name="bt_pump_option"]:checked');
+      var pump = pump_el ? pump_el.value : 'own';
+      if (pump === 'rental') {
+        items.push({ id: BT_KEG_VARIANTS['MM7509R'], quantity: 1 });
+        items.push({ id: BT_KEG_VARIANTS['MM7509D'], quantity: 1 });
+      } else if (pump === 'purchase') {
+        items.push({ id: BT_KEG_VARIANTS['MM7509E'], quantity: 1 });
+      }
+      var tub_ice = document.getElementById('bt_tub_ice');
+      if (tub_ice && tub_ice.checked) {
+        var ice_qty = parseInt(document.getElementById('bt_tub_addl_ice_qty').value) || 0;
+        if (ice_qty > 0) items.push({ id: BT_KEG_VARIANTS['CO013-7LB'], quantity: ice_qty });
+      }
+      var kt_cups = document.getElementById('bt_kt_add_cups');
+      if (kt_cups && kt_cups.checked) {
+        var sel = document.getElementById('bt_kt_cups_qty');
+        items.push({ id: BT_KEG_VARIANTS[sel.options[sel.selectedIndex].value], quantity: 1 });
+      }
+    }
+
+    if (items.length > 0) {
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items })
+      })
+      .then(function() { window.location.href = '/cart'; })
+      .catch(function(err) { console.error('Cart error:', err); });
+    } else {
+      window.location.href = '/cart';
+    }
+    return false;
+  }
+</script>
+{% endif %}
+
+
+
+
+
+
+
 
 
 <script>
