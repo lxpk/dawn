@@ -1517,6 +1517,7 @@ function changeBGimage(showID) {
 
     return false;
 
+    
 else if (acc_selected === 'tub') {
   console.log('tub selected');
   items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: buy_kegs });
@@ -1525,7 +1526,13 @@ else if (acc_selected === 'tub') {
   var buy_tub = document.getElementById('bt_buy_kegtub');
   console.log('buy_tub checked:', buy_tub ? buy_tub.checked : 'element not found');
 
+  fetch('/cart/add.js', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ items: [{ id: 48648386216192, quantity: 1 }] })
+}).then(r => r.json()).then(console.log).catch(console.error);
 
+console.log(BT_KEG_VARIANTS);
   }
 
 
