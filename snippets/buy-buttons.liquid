@@ -72,8 +72,8 @@
           -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
-            type="{% if template contains 'keg-template' %}button{% else %}submit{% endif %}"
-            {% if template contains 'keg-template' %}onclick="return add_accessories();"{% endif %}
+            type="{% if template == 'product.keg-template' or template == 'product.keg-beer-template' %}button{% else %}submit{% endif %}"
+            {% if template == 'product.keg-template' or template == 'product.keg-beer-template' %}onclick="return add_accessories();"{% endif %}
             name="add"
             class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
@@ -94,9 +94,10 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+          {%- if show_dynamic_checkout and template != 'product.keg-template' and template != 'product.keg-beer-template' -%}
+  {{ form | payment_button }}
+{%- endif -%}
+
         </div>
       {%- endform -%}
     </product-form>
