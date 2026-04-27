@@ -1516,6 +1516,16 @@ function changeBGimage(showID) {
     }
 
     return false;
+
+else if (acc_selected === 'tub') {
+  console.log('tub selected');
+  items.push({ id: BT_KEG_VARIANTS['KEG-DEP'], quantity: buy_kegs });
+  var rent_tub = document.getElementById('bt_rent_kegtub');
+  console.log('rent_tub checked:', rent_tub ? rent_tub.checked : 'element not found');
+  var buy_tub = document.getElementById('bt_buy_kegtub');
+  console.log('buy_tub checked:', buy_tub ? buy_tub.checked : 'element not found');
+
+
   }
 
 
