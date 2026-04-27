@@ -1305,7 +1305,7 @@
 
 
 
-
+{% if template == 'product.keg-template' %}
 <script>
   function getGrid(funct) {
     document.getElementById('wl_function').value = funct;
@@ -1536,6 +1536,8 @@ function changeBGimage(showID) {
     }
   }
 </script>
+{% endif %}
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
