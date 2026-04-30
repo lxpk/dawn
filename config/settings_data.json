@@ -136,6 +136,24 @@
       }
     },
     "content_for_index": [],
+    "blocks": {
+      "3570695679802564864": {
+        "type": "shopify://apps/canteen/blocks/app-block/f2012f29-34dc-4493-9b56-494771866342",
+        "disabled": false,
+        "settings": {
+          "version": "4.1.0",
+          "cart-fee-container": "",
+          "removeBtnOverride": "",
+          "hideRowOverride": "",
+          "inputElsOverride": "",
+          "checkoutBtnOverride": "",
+          "styleChangeOverride": "",
+          "notesOverride": "",
+          "IgnorePaths": "",
+          "buyNowButton": "true"
+        }
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
